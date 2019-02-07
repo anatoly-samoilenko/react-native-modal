@@ -43,6 +43,7 @@ class ReactNativeModal extends Component {
     backdropOpacity: PropTypes.number,
     backdropTransitionInTiming: PropTypes.number,
     backdropTransitionOutTiming: PropTypes.number,
+    backdropStyle: PropTypes.any,
     children: PropTypes.node.isRequired,
     deviceHeight: PropTypes.number,
     deviceWidth: PropTypes.number,
@@ -424,6 +425,7 @@ class ReactNativeModal extends Component {
       backdropOpacity,
       backdropTransitionInTiming,
       backdropTransitionOutTiming,
+      backdropStyle,
       children,
       deviceHeight: deviceHeightProp,
       deviceWidth: deviceWidthProp,
@@ -487,6 +489,7 @@ class ReactNativeModal extends Component {
             useNativeDriver={useNativeDriver}
             style={[
               styles.backdrop,
+              backdropStyle,
               {
                 backgroundColor: this.state.showContent
                   ? backdropColor

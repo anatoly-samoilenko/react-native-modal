@@ -20,6 +20,7 @@ declare module "react-native-modal" {
     backdropOpacity?: number;
     backdropTransitionInTiming?: number;
     backdropTransitionOutTiming?: number;
+    backdropStyle?: StyleProp<ViewStyle>;
     useNativeDriver?: boolean;
     children: ReactNode;
     deviceHeight?: number;
