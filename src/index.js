@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   PanResponder,
-  Animated
+  Animated, Text
 } from "react-native";
 import PropTypes from "prop-types";
 import {
@@ -43,7 +43,7 @@ class ReactNativeModal extends Component {
     backdropOpacity: PropTypes.number,
     backdropTransitionInTiming: PropTypes.number,
     backdropTransitionOutTiming: PropTypes.number,
-    backdropStyle: PropTypes.any,
+    offset: PropTypes.number,
     children: PropTypes.node.isRequired,
     deviceHeight: PropTypes.number,
     deviceWidth: PropTypes.number,
@@ -222,9 +222,9 @@ class ReactNativeModal extends Component {
         const newOpacityFactor = 1 - accDistance / deviceWidth;
         if (this.isSwipeDirectionAllowed(gestureState)) {
           this.backdropRef &&
-            this.backdropRef.transitionTo({
-              opacity: this.props.backdropOpacity * newOpacityFactor
-            });
+          this.backdropRef.transitionTo({
+            opacity: this.props.backdropOpacity * newOpacityFactor
+          });
           animEvt(evt, gestureState);
         } else {
           if (this.props.scrollTo) {
@@ -425,7 +425,7 @@ class ReactNativeModal extends Component {
       backdropOpacity,
       backdropTransitionInTiming,
       backdropTransitionOutTiming,
-      backdropStyle,
+      offset,
       children,
       deviceHeight: deviceHeightProp,
       deviceWidth: deviceWidthProp,
@@ -484,21 +484,24 @@ class ReactNativeModal extends Component {
         {...otherProps}
       >
         <TouchableWithoutFeedback onPress={onBackdropPress}>
-          <View
-            ref={ref => (this.backdropRef = ref)}
-            useNativeDriver={useNativeDriver}
-            style={[
-              styles.backdrop,
-              backdropStyle,
-              {
-                backgroundColor: this.state.showContent
-                  ? backdropColor
-                  : "transparent",
-                width: deviceWidth,
-                height: deviceHeight
-              }
-            ]}
-          />
+          <View>
+            <View style={{ height: offset, backgroundColor: 'transparent'}} />
+            <View
+              ref={ref => (this.backdropRef = ref)}
+              useNativeDriver={useNativeDriver}
+              style={[
+                styles.backdrop,
+                {
+                  backgroundColor: this.state.showContent
+                    ? backdropColor
+                    : "transparent",
+                  width: deviceWidth,
+                  height: deviceHeight,
+                  top: offset
+                }
+              ]}
+            />
+          </View>
         </TouchableWithoutFeedback>
 
         {avoidKeyboard && (
