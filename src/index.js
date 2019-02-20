@@ -485,7 +485,7 @@ class ReactNativeModal extends Component {
       >
         <TouchableWithoutFeedback onPress={onBackdropPress}>
           <View>
-            <View style={{ height: offset, backgroundColor: 'transparent'}} />
+            { offset && <View style={{ height: offset, backgroundColor: 'transparent'}} />}
             <View
               ref={ref => (this.backdropRef = ref)}
               useNativeDriver={useNativeDriver}
@@ -496,9 +496,9 @@ class ReactNativeModal extends Component {
                     ? backdropColor
                     : "transparent",
                   width: deviceWidth,
-                  height: deviceHeight,
-                  top: offset
-                }
+                  height: deviceHeight
+                },
+                offset ? {top: offset} : {}
               ]}
             />
           </View>
