@@ -477,7 +477,7 @@ class ReactNativeModal extends Component {
       <animatable.View
         {...panHandlers}
         ref={ref => (this.contentRef = ref)}
-        style={[panPosition, computedStyle]}
+        style={[panPosition, computedStyle, offset ? { marginTop: offset } : {}]}
         pointerEvents="box-none"
         useNativeDriver={useNativeDriver}
         {...otherProps}
@@ -496,24 +496,21 @@ class ReactNativeModal extends Component {
       >
         {hasBackdrop && (
           <TouchableWithoutFeedback onPress={onBackdropPress}>
-            <animatable.View style={{}}>
-              {offset ? <animatable.View style={{ height: offset, backgroundColor: "transparent" }}/> : null}
-              <animatable.View
-                ref={ref => (this.backdropRef = ref)}
-                useNativeDriver={true}
-                style={[
-                  styles.backdrop,
-                  {
-                    backgroundColor: this.state.showContent
-                      ? backdropColor
-                      : "transparent",
-                    width: deviceWidth,
-                    height: deviceHeight
-                  },
-                  offset ? { top: offset } : {}
-                ]}
-              />
-            </animatable.View>
+            <animatable.View
+              ref={ref => (this.backdropRef = ref)}
+              useNativeDriver={true}
+              style={[
+                styles.backdrop,
+                {
+                  backgroundColor: this.state.showContent
+                    ? backdropColor
+                    : "transparent",
+                  width: deviceWidth,
+                  height: deviceHeight
+                },
+                offset ? { top: offset } : {}
+              ]}
+            />
           </TouchableWithoutFeedback>
         )}
 
